@@ -23,10 +23,12 @@ class LoginViewModel : ViewModel() {
     fun checkLogin() {
         if(!id.value.isNullOrBlank() && !password.value.isNullOrBlank()) {
             login(id.value!!, password.value!!)
+        } else {
+            _loginResult.value = NetworkStatus.Error(throwable = Throwable("ID 또는 PW를 입력해 주세요"))
         }
     }
 
-    fun login(id: String, password: String) {
+    private fun login(id: String, password: String) {
         _loginResult.value = NetworkStatus.Loading()
         disposable.add(
             Server.authApi.login(LoginRequest(id, password))
