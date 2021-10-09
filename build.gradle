@@ -20,6 +20,7 @@ buildscript {
         gson_version = "2.8.8"
         lifecycle_version = "2.3.0"
         navigation_version = "2.3.1"
+        datastore_version = "1.0.0"
     }
 }
 
