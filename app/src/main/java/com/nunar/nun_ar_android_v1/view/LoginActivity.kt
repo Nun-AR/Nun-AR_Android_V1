@@ -8,7 +8,6 @@ import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.nunar.nun_ar_android_v1.MainActivity
 import com.nunar.nun_ar_android_v1.R
 import com.nunar.nun_ar_android_v1.databinding.ActivityLoginBinding
 import com.nunar.nun_ar_android_v1.utils.NetworkStatus
@@ -16,9 +15,7 @@ import com.nunar.nun_ar_android_v1.utils.tokenDataStore
 import com.nunar.nun_ar_android_v1.viewmodel.LoginViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import kotlin.coroutines.coroutineContext
 
 class LoginActivity : AppCompatActivity() {
 
