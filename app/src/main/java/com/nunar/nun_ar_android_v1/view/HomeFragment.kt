@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import com.nunar.nun_ar_android_v1.R
+import com.nunar.nun_ar_android_v1.adapter.PopularPostAdapter
 import com.nunar.nun_ar_android_v1.adapter.RecentPostAdapter
 import com.nunar.nun_ar_android_v1.databinding.FragmentHomeBinding
 import com.nunar.nun_ar_android_v1.utils.NetworkStatus
@@ -31,6 +32,9 @@ class HomeFragment : Fragment() {
         val recentPostAdapter = RecentPostAdapter()
         binding.rvRecentPost.adapter = recentPostAdapter
 
+        val popularPostAdapter = PopularPostAdapter()
+        binding.vpPopularPost.adapter = popularPostAdapter
+
         viewModel.popularPostResult.observe(viewLifecycleOwner, {
             when(it) {
                 is NetworkStatus.Error -> Toast.makeText(requireContext(), "${it.throwable.message}", Toast.LENGTH_SHORT).show()
@@ -38,7 +42,7 @@ class HomeFragment : Fragment() {
 
                 }
                 is NetworkStatus.Success -> {
-
+                    popularPostAdapter.submitList(it.data)
                 }
             }
         })
