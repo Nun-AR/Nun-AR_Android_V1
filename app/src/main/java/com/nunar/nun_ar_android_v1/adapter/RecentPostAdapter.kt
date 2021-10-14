@@ -26,7 +26,7 @@ class RecentPostAdapter :
             }
 
             Glide.with(binding.root.context)
-                .load(post.thumbnail)
+                .load("http://3.37.250.4:8080/image/${post.thumbnail}")
                 .into(binding.ivThumbnail)
 
         }

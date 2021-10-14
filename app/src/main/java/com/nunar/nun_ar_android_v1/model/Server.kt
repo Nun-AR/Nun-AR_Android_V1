@@ -25,10 +25,17 @@ object Server {
     class TokenInterceptor : Interceptor {
         private val tokenKey = stringPreferencesKey("token")
         override fun intercept(chain: Interceptor.Chain): Response {
-            val token = runBlocking { NunARApplication.context?.tokenDataStore?.data?.first() }?.get(tokenKey)
+            val token =
+                runBlocking { NunARApplication.context?.tokenDataStore?.data?.first() }?.get(
+                    tokenKey)
             val request =
                 chain.request().newBuilder().addHeader("Authorization", "Bearer $token").build()
-            return chain.proceed(request)
+            val response = chain.proceed(request)
+            return if (response.code == 403) {
+                chain.proceed(chain.request())
+            } else {
+                response
+            }
         }
     }
 
