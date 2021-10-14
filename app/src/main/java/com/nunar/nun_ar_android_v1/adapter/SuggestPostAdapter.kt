@@ -32,9 +32,9 @@ class SuggestPostAdapter : ListAdapter<PostResponse, SuggestPostAdapter.SuggestP
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SuggestPostViewHolder {
-        return SuggestPostAdapter.SuggestPostViewHolder(DataBindingUtil.inflate(
+        return SuggestPostViewHolder(DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.item_post,
+            R.layout.item_suggest,
             parent,
             false
         ))

@@ -15,6 +15,6 @@ interface Post {
     fun getPopularPost(): Single<BaseResponse<List<PostResponse>>>
 
     @GET("post/{postIdx}")
-    fun getPostByIdx(@Path("postIdx") postIdx: Int): Single<BaseResponse<List<PostResponse>>>
+    fun getPostByIdx(@Path("postIdx") postIdx: Int): Single<BaseResponse<PostResponse>>
 
 }

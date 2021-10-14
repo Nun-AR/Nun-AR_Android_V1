@@ -14,11 +14,15 @@ class PostViewModel: ViewModel() {
 
     private val disposable = CompositeDisposable()
 
-    private val _indexPostResult = MutableLiveData<NetworkStatus<List<PostResponse>>>()
-    val indexPostResult: LiveData<NetworkStatus<List<PostResponse>>> = _indexPostResult
+    private val _indexPostResult = MutableLiveData<NetworkStatus<PostResponse>>()
+    val indexPostResult: LiveData<NetworkStatus<PostResponse>> = _indexPostResult
+
+    private val _popularPostListResult = MutableLiveData<NetworkStatus<List<PostResponse>>>()
+    val popularPostResult: LiveData<NetworkStatus<List<PostResponse>>> = _popularPostListResult
 
     init {
         getIdxPostResult(0)
+        getPopularPostList()
     }
 
     fun getIdxPostResult(idx: Int){
@@ -36,6 +40,25 @@ class PostViewModel: ViewModel() {
                         }
                     }, {
                         _indexPostResult.value = NetworkStatus.Error(throwable = it)
+                    }
+                )
+        )
+    }
+
+    private fun getPopularPostList() {
+        _popularPostListResult.value = NetworkStatus.Loading()
+        disposable.add(
+            Server.postApi.getPopularPost().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(
+                    {
+                        if (it.code == 200) {
+                            _popularPostListResult.value = NetworkStatus.Success(it.data)
+                        } else {
+                            _popularPostListResult.value =
+                                NetworkStatus.Error(throwable = Throwable(it.message))
+                        }
+                    }, {
+                        _popularPostListResult.value = NetworkStatus.Error(throwable = it)
                     }
                 )
         )
