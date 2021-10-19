@@ -17,4 +17,7 @@ interface Post {
     @GET("post/{postIdx}")
     fun getPostByIdx(@Path("postIdx") postIdx: Int): Single<BaseResponse<List<PostResponse>>>
 
+    @GET("/post/search/{searchWord}")
+    fun getSearchResult(@Path("searchWord") searchWord: String): Single<BaseResponse<List<PostResponse>>>
+
 }

@@ -10,32 +10,27 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class PostViewModel : ViewModel() {
-
+class SearchResultViewModel: ViewModel() {
     private val disposable = CompositeDisposable()
 
-    private val _indexPostResult = MutableLiveData<NetworkStatus<List<PostResponse>>>()
-    val indexPostResult: LiveData<NetworkStatus<List<PostResponse>>> = _indexPostResult
+    private val _searchResult = MutableLiveData<NetworkStatus<List<PostResponse>>>()
+    val searchResult: LiveData<NetworkStatus<List<PostResponse>>> = _searchResult
 
-    init {
-        getIdxPostResult(0)
-    }
-
-    fun getIdxPostResult(idx: Int) {
-        _indexPostResult.value = NetworkStatus.Loading()
+    fun getSearchList(searchWord: String){
+        _searchResult.value = NetworkStatus.Loading()
 
         disposable.add(
-            Server.postApi.getPostByIdx(idx).subscribeOn(Schedulers.io())
+            Server.postApi.getSearchResult(searchWord).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(
                     {
                         if (it.code == 200) {
-                            _indexPostResult.value = NetworkStatus.Success(it.data)
+                            _searchResult.value = NetworkStatus.Success(it.data)
                         } else {
-                            _indexPostResult.value =
+                            _searchResult.value =
                                 NetworkStatus.Error(throwable = Throwable(it.message))
                         }
                     }, {
-                        _indexPostResult.value = NetworkStatus.Error(throwable = it)
+                        _searchResult.value = NetworkStatus.Error(throwable = it)
                     }
                 )
         )
