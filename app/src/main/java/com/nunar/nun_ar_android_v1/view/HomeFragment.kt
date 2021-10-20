@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.nunar.nun_ar_android_v1.R
 import com.nunar.nun_ar_android_v1.adapter.PopularPostAdapter
 import com.nunar.nun_ar_android_v1.adapter.RecentPostAdapter
@@ -60,6 +61,10 @@ class HomeFragment : Fragment() {
                 }
             }
         })
+
+        binding.btnSearch.setOnClickListener {
+            findNavController().navigate(R.id.action_home_fragment_to_search_fragment)
+        }
 
         return binding.root
     }
