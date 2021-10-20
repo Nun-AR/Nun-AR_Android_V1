@@ -19,12 +19,13 @@
             android:layout_height="60dp">
 
             <ImageView
+                android:id="@+id/btn_search"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginStart="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:src="@drawable/ic_search" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

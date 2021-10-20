@@ -2,37 +2,55 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/home_fragment"
-    android:id="@+id/nav_graph">
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/home_fragment">
 
-    <fragment android:id="@+id/home_fragment"
-        android:label="home_fragment"
+    <fragment
+        android:id="@+id/home_fragment"
         android:name="com.nunar.nun_ar_android_v1.view.HomeFragment"
-        tools:layout="@layout/fragment_home"/>
+        android:label="home_fragment"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_home_fragment_to_search_fragment"
+            app:destination="@id/search_fragment" />
+    </fragment>
 
-    <fragment android:id="@+id/post_fragment"
-        android:label="post_fragment"
+    <fragment
+        android:id="@+id/post_fragment"
         android:name="com.nunar.nun_ar_android_v1.view.PostFragment"
+        android:label="post_fragment"
         tools:layout="@layout/fragment_post" />
 
-    <fragment android:id="@+id/search_fragment"
-        android:label="search_fragment"
+    <fragment
+        android:id="@+id/search_fragment"
         android:name="com.nunar.nun_ar_android_v1.view.SearchFragment"
-        tools:layout="@layout/fragment_search" />
+        android:label="search_fragment"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_search_fragment_to_search_result_fragment"
+            app:destination="@id/search_result_fragment" />
+    </fragment>
 
-    <fragment android:id="@+id/search_result_fragment"
-        android:label="search_result_fragment"
+    <fragment
+        android:id="@+id/search_result_fragment"
         android:name="com.nunar.nun_ar_android_v1.view.SearchResultFragment"
-        tools:layout="@layout/fragment_search_result" />
+        android:label="search_result_fragment"
+        tools:layout="@layout/fragment_search_result">
+        <argument
+            android:name="searchWord"
+            app:argType="string" />
+    </fragment>
 
-    <fragment android:id="@+id/write_post_fragment"
-        android:label="write_post_fragment"
+    <fragment
+        android:id="@+id/write_post_fragment"
         android:name="com.nunar.nun_ar_android_v1.view.WritePostFragment"
+        android:label="write_post_fragment"
         tools:layout="@layout/fragment_write_post" />
 
-    <fragment android:id="@+id/user_info_fragment"
-        android:label="user_info_fragment"
+    <fragment
+        android:id="@+id/user_info_fragment"
         android:name="com.nunar.nun_ar_android_v1.view.UserInfoFragment"
+        android:label="user_info_fragment"
         tools:layout="@layout/fragment_user_info" />
 
 </navigation>
