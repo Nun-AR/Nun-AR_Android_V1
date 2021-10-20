@@ -10,7 +10,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class PostViewModel: ViewModel() {
+class PostViewModel : ViewModel() {
 
     private val disposable = CompositeDisposable()
 
@@ -25,7 +25,7 @@ class PostViewModel: ViewModel() {
         getPopularPostList()
     }
 
-    fun getIdxPostResult(idx: Int){
+    fun getIdxPostResult(idx: Int) {
         _indexPostResult.value = NetworkStatus.Loading()
 
         disposable.add(
