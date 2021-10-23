@@ -8,6 +8,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout"
         android:paddingHorizontal="10dp"
         android:layout_marginBottom="20dp"
         android:layout_width="match_parent"

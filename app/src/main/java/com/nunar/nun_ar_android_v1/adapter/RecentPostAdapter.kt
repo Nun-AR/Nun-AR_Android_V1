@@ -10,9 +10,14 @@ import com.nunar.nun_ar_android_v1.R
 import com.nunar.nun_ar_android_v1.adapter.callback.PostResponseDiffUtilCallback
 import com.nunar.nun_ar_android_v1.databinding.ItemPostBinding
 import com.nunar.nun_ar_android_v1.model.response.PostResponse
+import com.nunar.nun_ar_android_v1.widget.SingleLiveEvent
 
 class RecentPostAdapter :
     ListAdapter<PostResponse, RecentPostAdapter.RecentPostViewHolder>(PostResponseDiffUtilCallback) {
+
+    companion object {
+        val onClick = SingleLiveEvent<Int>()
+    }
 
     class RecentPostViewHolder(private val binding: ItemPostBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -24,6 +29,9 @@ class RecentPostAdapter :
             binding.btnBookmark.isSelected = post.isBookmarks
             binding.btnBookmark.setOnClickListener {
 
+            }
+            binding.layout.setOnClickListener {
+                onClick.value = post.postIdx
             }
 
             Glide.with(binding.root.context)
