@@ -32,7 +32,7 @@ class SearchResultAdapter : ListAdapter<PostResponse, SearchResultAdapter.Search
             binding.layout.setOnClickListener { onClick.value = item.postIdx }
 
             Glide.with(binding.root.context)
-                .load("http://3.37.250.4:8080/image/${item.thumbnail}")
+                .load("https://nun-ar.com/image/${item.thumbnail}")
                 .into(binding.ivThumbnail)
         }
     }

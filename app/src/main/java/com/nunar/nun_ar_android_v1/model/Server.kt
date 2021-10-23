@@ -5,10 +5,7 @@ import com.nunar.nun_ar_android_v1.NunARApplication
 import com.nunar.nun_ar_android_v1.model.api.Auth
 import com.nunar.nun_ar_android_v1.model.api.Post
 import com.nunar.nun_ar_android_v1.utils.tokenDataStore
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -20,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object Server {
 
-    private val AWS_URL = "http://3.37.250.4:8080/v1/"
+    private val DOMAIN = "https://nun-ar.com/v1/"
 
     class TokenInterceptor : Interceptor {
         private val tokenKey = stringPreferencesKey("token")
@@ -46,7 +43,7 @@ object Server {
         .build()
 
     private val server = Retrofit.Builder()
-        .baseUrl(AWS_URL)
+        .baseUrl(DOMAIN)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create())
         .client(client)
