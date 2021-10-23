@@ -10,9 +10,15 @@ import com.nunar.nun_ar_android_v1.R
 import com.nunar.nun_ar_android_v1.adapter.callback.PostResponseDiffUtilCallback
 import com.nunar.nun_ar_android_v1.databinding.ItemSearchResultBinding
 import com.nunar.nun_ar_android_v1.model.response.PostResponse
+import com.nunar.nun_ar_android_v1.widget.SingleLiveEvent
 
 class SearchResultAdapter : ListAdapter<PostResponse, SearchResultAdapter.SearchResultViewHolder>(
     PostResponseDiffUtilCallback) {
+
+    companion object {
+        val onClick = SingleLiveEvent<Int>()
+    }
+
     class SearchResultViewHolder(private val binding: ItemSearchResultBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: PostResponse) {
@@ -22,6 +28,8 @@ class SearchResultAdapter : ListAdapter<PostResponse, SearchResultAdapter.Search
             binding.btnBookmark.setOnClickListener {
 
             }
+
+            binding.layout.setOnClickListener { onClick.value = item.postIdx }
 
             Glide.with(binding.root.context)
                 .load("http://3.37.250.4:8080/image/${item.thumbnail}")

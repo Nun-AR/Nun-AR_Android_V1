@@ -14,13 +14,20 @@
         <action
             android:id="@+id/action_home_fragment_to_search_fragment"
             app:destination="@id/search_fragment" />
+        <action
+            android:id="@+id/action_home_fragment_to_post_fragment"
+            app:destination="@id/post_fragment" />
     </fragment>
 
     <fragment
         android:id="@+id/post_fragment"
         android:name="com.nunar.nun_ar_android_v1.view.PostFragment"
         android:label="post_fragment"
-        tools:layout="@layout/fragment_post" />
+        tools:layout="@layout/fragment_post">
+        <argument
+            android:name="postIdx"
+            app:argType="integer"/>
+    </fragment>
 
     <fragment
         android:id="@+id/search_fragment"
@@ -40,6 +47,9 @@
         <argument
             android:name="searchWord"
             app:argType="string" />
+        <action
+            android:id="@+id/action_search_result_fragment_to_post_fragment"
+            app:destination="@id/post_fragment" />
     </fragment>
 
     <fragment

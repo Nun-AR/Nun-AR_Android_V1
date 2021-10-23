@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.nunar.nun_ar_android_v1.R
 import com.nunar.nun_ar_android_v1.adapter.SearchResultAdapter
 import com.nunar.nun_ar_android_v1.databinding.FragmentSearchResultBinding
@@ -29,9 +31,11 @@ class SearchResultFragment : Fragment() {
         val searchResultAdapter = SearchResultAdapter()
         binding.resultRvList.adapter = searchResultAdapter
 
-        
+        val searchKeyword = arguments?.getString("searchWord")
+        viewModel.getSearchList(searchKeyword?: "")
+        binding.resultTvResult.text = "${searchKeyword}의 검색 결과"
 
-        viewModel.searchResult.observe(viewLifecycleOwner, Observer {
+        viewModel.searchResult.observe(viewLifecycleOwner, {
             when(it){
                 is NetworkStatus.Error -> Toast.makeText(requireContext(), "${it.throwable.message}", Toast.LENGTH_SHORT).show()
                 is NetworkStatus.Loading -> {
@@ -41,6 +45,11 @@ class SearchResultFragment : Fragment() {
                     searchResultAdapter.submitList(it.data)
                 }
             }
+        })
+
+        SearchResultAdapter.onClick.observe(this, {
+            val action = SearchResultFragmentDirections.actionSearchResultFragmentToPostFragment(it)
+            findNavController().navigate(action)
         })
 
 
