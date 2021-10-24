@@ -33,6 +33,10 @@ class PostFragment : Fragment() {
         val suggestPostAdapter = SuggestPostAdapter()
         binding.postRecycler.adapter = suggestPostAdapter
 
+        arguments?.getInt("postIdx")?.let {
+            viewModel.getIdxPostResult(it)
+        }
+
         viewModel.indexPostResult.observe(viewLifecycleOwner, Observer {
             when(it) {
                 is NetworkStatus.Error -> Toast.makeText(requireContext(), "${it.throwable.message}", Toast.LENGTH_SHORT).show()
@@ -55,7 +59,7 @@ class PostFragment : Fragment() {
 
                     }
                     binding.postArRunBtn.setOnClickListener {
-                        var sceneViewIntent: Intent = Intent(Intent.ACTION_VIEW)
+                        val sceneViewIntent = Intent(Intent.ACTION_VIEW)
                         val url = Uri.parse("https://arvr.google.com/scene-viewer/1.0").buildUpon()
                             .appendQueryParameter("file",
                                 "http://3.37.250.4:8080/model/${fileUrl}")

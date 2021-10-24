@@ -38,10 +38,10 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/nanum_gothic"
-                    android:text="상자의 검색 결과"
                     android:textColor="@color/white"
-                    android:textFontWeight="700"
-                    android:textSize="20sp" />
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    tools:text="상자의 검색 결과" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/result_rvList"

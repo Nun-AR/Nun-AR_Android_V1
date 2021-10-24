@@ -21,7 +21,6 @@ class PostViewModel : ViewModel() {
     val popularPostResult: LiveData<NetworkStatus<List<PostResponse>>> = _popularPostListResult
 
     init {
-        getIdxPostResult(0)
         getPopularPostList()
     }
 

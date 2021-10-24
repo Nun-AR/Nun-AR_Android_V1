@@ -10,9 +10,14 @@ import com.nunar.nun_ar_android_v1.R
 import com.nunar.nun_ar_android_v1.adapter.callback.PostResponseDiffUtilCallback
 import com.nunar.nun_ar_android_v1.databinding.ItemPopularPostBinding
 import com.nunar.nun_ar_android_v1.model.response.PostResponse
+import com.nunar.nun_ar_android_v1.widget.SingleLiveEvent
 
 class PopularPostAdapter :
     ListAdapter<PostResponse, PopularPostAdapter.PopularPostViewHolder>(PostResponseDiffUtilCallback) {
+
+    companion object {
+        val onClick = SingleLiveEvent<Int>()
+    }
 
     class PopularPostViewHolder(private val binding: ItemPopularPostBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -22,8 +27,12 @@ class PopularPostAdapter :
             binding.tvTitle.text = post.title
             binding.tvTag.text = post.tag
 
+            binding.cvThumbnail.setOnClickListener {
+                onClick.value = post.postIdx
+            }
+
             Glide.with(binding.root.context)
-                .load("http://3.37.250.4:8080/image/${post.thumbnail}")
+                .load("https://nun-ar.com/image/${post.thumbnail}")
                 .into(binding.ivThumbnail)
 
         }

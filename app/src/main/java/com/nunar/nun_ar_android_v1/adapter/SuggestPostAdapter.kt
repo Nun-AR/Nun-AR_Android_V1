@@ -26,7 +26,7 @@ class SuggestPostAdapter : ListAdapter<PostResponse, SuggestPostAdapter.SuggestP
             }
 
             Glide.with(binding.root.context)
-                .load("http://3.37.250.4:8080/image/${post.thumbnail}")
+                .load("https://nun-ar.com/image/${post.thumbnail}")
                 .into(binding.suggestImage)
         }
     }

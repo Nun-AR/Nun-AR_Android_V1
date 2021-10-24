@@ -62,6 +62,16 @@ class HomeFragment : Fragment() {
             }
         })
 
+        RecentPostAdapter.onClick.observe(this, {
+            val action = HomeFragmentDirections.actionHomeFragmentToPostFragment(it)
+            findNavController().navigate(action)
+        })
+
+        PopularPostAdapter.onClick.observe(this, {
+            val action = HomeFragmentDirections.actionHomeFragmentToPostFragment(it)
+            findNavController().navigate(action)
+        })
+
         binding.btnSearch.setOnClickListener {
             findNavController().navigate(R.id.action_home_fragment_to_search_fragment)
         }
