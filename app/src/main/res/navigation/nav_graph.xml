@@ -13,10 +13,18 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_home_fragment_to_search_fragment"
-            app:destination="@id/search_fragment" />
+            app:destination="@id/search_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_home_fragment_to_post_fragment"
-            app:destination="@id/post_fragment" />
+            app:destination="@id/post_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -36,7 +44,11 @@
         tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_search_fragment_to_search_result_fragment"
-            app:destination="@id/search_result_fragment" />
+            app:destination="@id/search_result_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -49,7 +61,11 @@
             app:argType="string" />
         <action
             android:id="@+id/action_search_result_fragment_to_post_fragment"
-            app:destination="@id/post_fragment" />
+            app:destination="@id/post_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
