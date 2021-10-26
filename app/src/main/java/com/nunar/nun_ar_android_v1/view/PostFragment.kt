@@ -71,8 +71,12 @@ class PostFragment : Fragment() {
                     }
 
                     Glide.with(this)
-                        .load("http://3.37.250.4:8080/image/${it.data.thumbnail}")
+                        .load("https://nun-ar.com/image/${it.data.thumbnail}")
                         .into(binding.postImageView)
+
+                    Glide.with(this)
+                        .load("https://nun-ar.com/image/${it.data.profileUrl}")
+                        .into(binding.postUserImage)
                 }
             }
         })
