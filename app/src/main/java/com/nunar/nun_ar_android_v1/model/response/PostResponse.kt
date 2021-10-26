@@ -9,5 +9,6 @@ data class PostResponse(
     val isBookmarks: Boolean,
     val tag: String,
     val thumbnail: String,
-    val fileUrl: String
+    val fileUrl: String,
+    val profileUrl: String
 )
