@@ -24,6 +24,7 @@ class HomeViewModel : ViewModel() {
         refresh()
     }
 
+
     fun refresh() {
         getPopularPostList()
         getRecentPostList()

@@ -76,6 +76,10 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_home_fragment_to_search_fragment)
         }
 
+        binding.btnWrite.setOnClickListener {
+            findNavController().navigate(R.id.action_home_fragment_to_write_post_fragment)
+        }
+
         return binding.root
     }
 
