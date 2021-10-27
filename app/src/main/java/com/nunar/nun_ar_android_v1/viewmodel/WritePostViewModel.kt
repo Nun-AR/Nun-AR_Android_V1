@@ -42,6 +42,7 @@ class WritePostViewModel : ViewModel() {
                     _uploadImageResult.value = NetworkStatus.Success(it.data)
                 } else {
                     _uploadImageResult.value = NetworkStatus.Error(throwable = Throwable(it.message))
+
                 }
             }, {
                 _uploadImageResult.value = NetworkStatus.Error(throwable = it)

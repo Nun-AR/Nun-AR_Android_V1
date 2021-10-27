@@ -4,6 +4,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import com.nunar.nun_ar_android_v1.NunARApplication
 import com.nunar.nun_ar_android_v1.model.api.Auth
 import com.nunar.nun_ar_android_v1.model.api.Post
+import com.nunar.nun_ar_android_v1.model.api.Upload
 import com.nunar.nun_ar_android_v1.utils.tokenDataStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -51,4 +52,5 @@ object Server {
 
     val authApi: Auth = server.create(Auth::class.java)
     val postApi: Post = server.create(Post::class.java)
+    val uploadApi: Upload = server.create(Upload::class.java)
 }
