@@ -10,4 +10,5 @@
 
     <color name="colorBackground">#001E44</color>
     <color name="text_gray">#C4C4C4</color>
+    <color name="hint_color">#9A9A9A</color>
 </resources>

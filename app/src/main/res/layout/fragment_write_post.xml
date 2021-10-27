@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.WritePostFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-<<<<<<< Updated upstream
-        android:text="@string/hello_blank_fragment" />
-=======
         android:background="@color/colorBackground"
         tools:context=".view.WritePostFragment">
 
         <ImageButton
             android:id="@+id/write_backBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_back_arrow"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:src="@drawable/ic_back_arrow" />
 
         <EditText
             android:id="@+id/et_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/write_backBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -39,23 +39,23 @@
             android:textColor="@color/white"
             android:textColorHint="@color/hint_color"
             android:textFontWeight="700"
-            android:textSize="19sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/write_backBtn" />
+            android:textSize="19sp" />
 
         <ImageButton
             android:id="@+id/fileUploadBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_upload"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_title" />
+            android:src="@drawable/ic_upload" />
 
         <EditText
             android:id="@+id/et_tag"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fileUploadBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -68,17 +68,12 @@
             android:textColor="@color/white"
             android:textColorHint="@color/hint_color"
             android:textFontWeight="700"
-            android:textSize="19sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fileUploadBtn" />
+            android:textSize="19sp" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/write_uploadBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="16dp"
             android:background="@drawable/background_login_button"
             android:fontFamily="sans-serif"
             android:text="UPLOAD"
@@ -92,12 +87,12 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
             android:background="@drawable/gltf_background"
             android:padding="15dp"
             android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/et_tag"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_title">
@@ -139,17 +134,17 @@
 
         <LinearLayout
             android:id="@+id/imageUploadView"
+            app:layout_constraintBottom_toTopOf="@+id/write_uploadBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_tag"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
             android:background="@drawable/background_image_upload"
             android:orientation="vertical"
-            android:padding="15dp"
-            app:layout_constraintBottom_toTopOf="@+id/write_uploadBtn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_tag">
+            android:padding="15dp">
 
             <ImageView
                 android:id="@+id/imageUploadIcon"
@@ -174,17 +169,17 @@
 
         <FrameLayout
             android:id="@+id/imageView"
+            app:layout_constraintBottom_toTopOf="@+id/write_uploadBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="32dp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toTopOf="@+id/write_uploadBtn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_tag">
+            android:visibility="invisible">
 
             <ImageView
                 android:id="@+id/thumbnailImage"
@@ -200,6 +195,6 @@
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_minus_btn" />
         </FrameLayout>
->>>>>>> Stashed changes
 
-</FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
