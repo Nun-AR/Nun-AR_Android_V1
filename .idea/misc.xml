@@ -4,12 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/ljh04/Documents/GitHub/Nun-AR_Android_V1/app/src/main/res/drawable/ar_btn.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/ljh04/Documents/GitHub/Nun-AR_Android_V1/app/src/main/res/drawable/background_image_upload.xml" value="1.4892857142857143" />
         <entry key="..\:/Users/ljh04/Documents/GitHub/Nun-AR_Android_V1/app/src/main/res/drawable/background_login_button.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/ljh04/Documents/GitHub/Nun-AR_Android_V1/app/src/main/res/drawable/background_login_text.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/ljh04/Documents/GitHub/Nun-AR_Android_V1/app/src/main/res/drawable/background_popular_post_image.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/ljh04/Documents/GitHub/Nun-AR_Android_V1/app/src/main/res/drawable/background_post_ar_button.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/ljh04/Documents/GitHub/Nun-AR_Android_V1/app/src/main/res/drawable/background_post_download_button.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/ljh04/Documents/GitHub/Nun-AR_Android_V1/app/src/main/res/drawable/download_btn.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/ljh04/Documents/GitHub/Nun-AR_Android_V1/app/src/main/res/drawable/gltf_background.xml" value="0.2171875" />
         <entry key="..\:/Users/ljh04/Documents/GitHub/Nun-AR_Android_V1/app/src/main/res/drawable/ic_back_arrow.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/ljh04/Documents/GitHub/Nun-AR_Android_V1/app/src/main/res/drawable/ic_bookmark.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/ljh04/Documents/GitHub/Nun-AR_Android_V1/app/src/main/res/drawable/ic_bookmark_already.xml" value="0.38229166666666664" />
@@ -17,10 +19,11 @@
         <entry key="..\:/Users/ljh04/Documents/GitHub/Nun-AR_Android_V1/app/src/main/res/drawable/ic_download.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/ljh04/Documents/GitHub/Nun-AR_Android_V1/app/src/main/res/drawable/ic_search.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/ljh04/Documents/GitHub/Nun-AR_Android_V1/app/src/main/res/layout/activity_main.xml" value="0.36614583333333334" />
-        <entry key="..\:/Users/ljh04/Documents/GitHub/Nun-AR_Android_V1/app/src/main/res/layout/fragment_home.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/ljh04/Documents/GitHub/Nun-AR_Android_V1/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/Users/ljh04/Documents/GitHub/Nun-AR_Android_V1/app/src/main/res/layout/fragment_post.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/ljh04/Documents/GitHub/Nun-AR_Android_V1/app/src/main/res/layout/fragment_search.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/ljh04/Documents/GitHub/Nun-AR_Android_V1/app/src/main/res/layout/fragment_search_result.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/ljh04/Documents/GitHub/Nun-AR_Android_V1/app/src/main/res/layout/fragment_write_post.xml" value="0.20104166666666667" />
         <entry key="..\:/Users/ljh04/Documents/GitHub/Nun-AR_Android_V1/app/src/main/res/layout/item_popular_post.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/ljh04/Documents/GitHub/Nun-AR_Android_V1/app/src/main/res/layout/item_post.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/ljh04/Documents/GitHub/Nun-AR_Android_V1/app/src/main/res/layout/item_search_result.xml" value="0.36614583333333334" />

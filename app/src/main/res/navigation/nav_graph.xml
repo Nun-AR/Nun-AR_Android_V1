@@ -25,6 +25,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_home_fragment_to_write_post_fragment"
+            app:destination="@id/write_post_fragment" />
     </fragment>
 
     <fragment
