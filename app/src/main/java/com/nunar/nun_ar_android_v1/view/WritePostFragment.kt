@@ -2,13 +2,17 @@ package com.nunar.nun_ar_android_v1.view
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -24,11 +28,14 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStream
+import java.util.jar.Manifest
 
 class WritePostFragment : Fragment() {
 
     private val CODE_GET_FILE = 1001
-    private val CODE_GET_IMAGE = 1001
+    private val CODE_GET_IMAGE = 1002
 
     val viewModel: WritePostViewModel by viewModels()
 
@@ -41,6 +48,8 @@ class WritePostFragment : Fragment() {
             container,
             false)
         binding.lifecycleOwner = viewLifecycleOwner
+
+        checkPermission()
 
         binding.writeBackBtn.setOnClickListener {
             findNavController().popBackStack()
@@ -97,21 +106,25 @@ class WritePostFragment : Fragment() {
         var file: File? = null
 
         if (resultCode == RESULT_OK) {
+            Log.e("fadofnaof","${requestCode} ${resultCode}")
             if (requestCode == CODE_GET_FILE) {
                 if (data?.data != null) {
-                    val uri: Uri = getRealPathFromUri(data.data!!)
-                    file = File(getRealPathFromUri(uri).path)
-                    MultipartBody.Part.createFormData("file", file.path, RequestBody.create(
-                        "image/jpeg".toMediaTypeOrNull(), file))
+
                 }
             } else if (requestCode == CODE_GET_IMAGE) {
+                Log.e("fadofnaof", data?.data.toString())
                 if (data?.data != null) {
-                    val uri: Uri = getRealPathFromUri(data.data!!)
-                    file = File(getRealPathFromUri(uri).path)
+                    Log.e("fadofnaof", "daf")
+                    //val uri: Uri =
+                    file = File(createCopyAndReturnRealPath(data.data!!))
 
-                    val fileBody = RequestBody.create("image/jpeg".toMediaTypeOrNull(), file.path)
+                    Log.e("fadofnaof", "aaaaa: ${file.name}")
+                    Log.e("fadofnaof", "aaa : ${file.path}")
+
+                    val fileBody = RequestBody.create("image/jpeg".toMediaTypeOrNull
+                        (), file)
                     val filePart = MultipartBody.Part.createFormData("file",
-                        file.path,
+                        file.name,
                         fileBody)
 
                     viewModel.uploadImage(filePart)
@@ -122,17 +135,42 @@ class WritePostFragment : Fragment() {
         }
     }
 
-    private fun getRealPathFromUri(uri: Uri): Uri {
-        val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor = requireContext().contentResolver.query(uri, filePathColumn, null, null, null)
-        cursor?.moveToFirst()
+    fun createCopyAndReturnRealPath(uri: Uri) :String? {
+        val context = requireContext()
+        val contentResolver = context.contentResolver ?: return null
 
-        val columnIndex = cursor?.getColumnIndex(filePathColumn[0])
-        val picturePath = columnIndex?.let {
-            cursor.getString(it)
+        // Create file path inside app's data dir
+        val filePath = (context.applicationInfo.dataDir + File.separator
+                + System.currentTimeMillis())
+        val file = File(filePath)
+        try {
+            val inputStream = contentResolver.openInputStream(uri) ?: return null
+            val outputStream: OutputStream = FileOutputStream(file)
+            val buf = ByteArray(1024)
+            var len: Int
+            while (inputStream.read(buf).also { len = it } > 0) outputStream.write(buf, 0, len)
+            outputStream.close()
+            inputStream.close()
+            return file.getAbsolutePath()
+        } catch (e: Exception) {
+           return null
         }
-        cursor?.close()
-
-        return Uri.fromFile(File(picturePath ?: ""))
+        return null
     }
+
+    fun checkPermission(){
+        val permission = android.Manifest.permission.READ_EXTERNAL_STORAGE
+        val permissionResult = ContextCompat.checkSelfPermission(requireContext(), permission)
+
+        when(permissionResult){
+            PackageManager.PERMISSION_DENIED->{
+                ActivityCompat.requestPermissions(requireActivity(), arrayOf(permission), 100)
+            }
+            PackageManager.PERMISSION_GRANTED->{
+                Toast.makeText(requireContext(), "권한 존재함", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    }
+
 }
