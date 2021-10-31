@@ -3,7 +3,9 @@ package com.nunar.nun_ar_android_v1.view
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.ImageDecoder
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -13,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -38,16 +41,19 @@ class WritePostFragment : Fragment() {
     private val CODE_GET_IMAGE = 1002
 
     val viewModel: WritePostViewModel by viewModels()
+    lateinit var binding: FragmentWritePostBinding
+    val checkInput = IntArray(2)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        val binding = DataBindingUtil.inflate<FragmentWritePostBinding>(inflater,
+        binding = DataBindingUtil.inflate<FragmentWritePostBinding>(inflater,
             R.layout.fragment_write_post,
             container,
             false)
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.vm = viewModel
 
         checkPermission()
 
@@ -68,6 +74,10 @@ class WritePostFragment : Fragment() {
             startActivityForResult(intent, CODE_GET_IMAGE)
         }
 
+        binding.writeUploadBtn.setOnClickListener {
+            checkUploadBtn()
+        }
+
         viewModel.uploadFileResult.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is NetworkStatus.Error -> Toast.makeText(requireContext(),
@@ -77,8 +87,6 @@ class WritePostFragment : Fragment() {
 
                 }
                 is NetworkStatus.Success -> {
-                    binding.imageUploadView.isInvisible = false
-                    binding.imageView.isInvisible = true
                 }
             }
         })
@@ -92,11 +100,41 @@ class WritePostFragment : Fragment() {
 
                 }
                 is NetworkStatus.Success -> {
-                    binding.imageUploadView.isVisible = false
-                    binding.imageView.isVisible = true
                 }
             }
         })
+
+        viewModel.writePostResult.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is NetworkStatus.Error -> Toast.makeText(requireContext(),
+                    "${it.throwable.message}",
+                    Toast.LENGTH_SHORT).show()
+                is NetworkStatus.Loading -> {
+
+                }
+                is NetworkStatus.Success -> {
+                }
+            }
+        })
+
+        viewModel.postIdx.observe(viewLifecycleOwner, Observer {
+            val idx: Int = viewModel.postIdx.value ?: 0
+            val action =
+                WritePostFragmentDirections.actionWritePostFragmentToPostFragment(idx)
+            findNavController().navigate(action)
+        })
+
+        binding.deleteImageBtn.setOnClickListener {
+            binding.imageUploadView.isInvisible = true
+            binding.imageView.isVisible = false
+            checkInput[0] = 0
+        }
+
+        binding.fileDeleteBtn.setOnClickListener {
+            binding.fileUploadBtn.isVisible = true
+            binding.modelView.isVisible = false
+            checkInput[1] = 0
+        }
 
         return binding.root
     }
@@ -106,28 +144,40 @@ class WritePostFragment : Fragment() {
         var file: File? = null
 
         if (resultCode == RESULT_OK) {
-            Log.e("fadofnaof","${requestCode} ${resultCode}")
+            Log.e("fadofnaof", "${requestCode} ${resultCode}")
             if (requestCode == CODE_GET_FILE) {
                 if (data?.data != null) {
-
-                }
-            } else if (requestCode == CODE_GET_IMAGE) {
-                Log.e("fadofnaof", data?.data.toString())
-                if (data?.data != null) {
-                    Log.e("fadofnaof", "daf")
-                    //val uri: Uri =
                     file = File(createCopyAndReturnRealPath(data.data!!))
 
-                    Log.e("fadofnaof", "aaaaa: ${file.name}")
-                    Log.e("fadofnaof", "aaa : ${file.path}")
+                    binding.fileUploadBtn.isVisible = false
+                    binding.modelView.isVisible = true
+                    binding.tvFileName.text = file.name
 
-                    val fileBody = RequestBody.create("image/jpeg".toMediaTypeOrNull
-                        (), file)
-                    val filePart = MultipartBody.Part.createFormData("file",
-                        file.name,
-                        fileBody)
+                    checkInput[1] = 1
+                    viewModel.modelFile.value = file
+                }
+            } else if (requestCode == CODE_GET_IMAGE) {
+                if (data?.data != null) {
+                    file = File(createCopyAndReturnRealPath(data.data!!))
 
-                    viewModel.uploadImage(filePart)
+                    Log.e("adsf", data.data!!.toString())
+
+                    if (Build.VERSION.SDK_INT < 28) {
+                        val bitmap =
+                            MediaStore.Images.Media.getBitmap(activity?.contentResolver,
+                                data.data!!)
+                        binding.thumbnailImage.setImageBitmap(bitmap)
+                    } else {
+                        val source =
+                            ImageDecoder.createSource(activity?.contentResolver!!, data.data!!)
+                        val bitmap = ImageDecoder.decodeBitmap(source)
+                        binding.thumbnailImage.setImageBitmap(bitmap)
+                    }
+
+                    checkInput[0] = 1
+                    binding.imageUploadView.isVisible = false
+                    binding.imageView.isVisible = true
+                    viewModel.imageFile.value = file
                 }
             }
         } else {
@@ -135,11 +185,31 @@ class WritePostFragment : Fragment() {
         }
     }
 
-    fun createCopyAndReturnRealPath(uri: Uri) :String? {
+    fun checkUploadBtn() {
+        if (!viewModel.title.value.equals("") && viewModel.title.value != null) {
+
+            if (!viewModel.tag.value.equals("") && viewModel.tag.value != null) {
+
+                if (checkInput[0] == 1 && checkInput[1] == 1) {
+                    viewModel.startWritePost()
+                } else {
+                    Toast.makeText(requireContext(),
+                        "3D 모델링 파일 및 썸네일 이미지를 추가해주세요.",
+                        Toast.LENGTH_SHORT)
+                        .show()
+                }
+            } else {
+                Toast.makeText(requireContext(), "tag를 입력해주세요.", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(requireContext(), "제목을 입력해주세요.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun createCopyAndReturnRealPath(uri: Uri): String? {
         val context = requireContext()
         val contentResolver = context.contentResolver ?: return null
 
-        // Create file path inside app's data dir
         val filePath = (context.applicationInfo.dataDir + File.separator
                 + System.currentTimeMillis())
         val file = File(filePath)
@@ -153,20 +223,20 @@ class WritePostFragment : Fragment() {
             inputStream.close()
             return file.getAbsolutePath()
         } catch (e: Exception) {
-           return null
+            return null
         }
         return null
     }
 
-    fun checkPermission(){
+    fun checkPermission() {
         val permission = android.Manifest.permission.READ_EXTERNAL_STORAGE
         val permissionResult = ContextCompat.checkSelfPermission(requireContext(), permission)
 
-        when(permissionResult){
-            PackageManager.PERMISSION_DENIED->{
+        when (permissionResult) {
+            PackageManager.PERMISSION_DENIED -> {
                 ActivityCompat.requestPermissions(requireActivity(), arrayOf(permission), 100)
             }
-            PackageManager.PERMISSION_GRANTED->{
+            PackageManager.PERMISSION_GRANTED -> {
                 Toast.makeText(requireContext(), "권한 존재함", Toast.LENGTH_SHORT).show()
             }
         }

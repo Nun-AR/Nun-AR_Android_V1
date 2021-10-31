@@ -71,11 +71,19 @@
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
-    <fragment
+     <fragment
         android:id="@+id/write_post_fragment"
         android:name="com.nunar.nun_ar_android_v1.view.WritePostFragment"
         android:label="write_post_fragment"
-        tools:layout="@layout/fragment_write_post" />
+        tools:layout="@layout/fragment_write_post" >
+         <action
+             android:id="@+id/action_write_post_fragment_to_post_fragment"
+             app:destination="@id/post_fragment"
+             app:popUpTo="@id/home_fragment" />
+         <argument
+             android:name="pageIdx"
+             app:argType="integer" />
+     </fragment>
 
     <fragment
         android:id="@+id/user_info_fragment"
