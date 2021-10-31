@@ -14,6 +14,6 @@ interface Upload {
     fun uploadImage(@Part image: MultipartBody.Part): Single<BaseResponse<String>>
 
     @Multipart
-    @POST("upload/file")
+    @POST("upload/model")
     fun uploadModel(@Part file: MultipartBody.Part): Single<BaseResponse<String>>
 }
