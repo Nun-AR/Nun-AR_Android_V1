@@ -5,6 +5,7 @@ import com.nunar.nun_ar_android_v1.model.response.PostResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface Post {
 
@@ -17,7 +18,7 @@ interface Post {
     @GET("post/{postIdx}")
     fun getPostByIdx(@Path("postIdx") postIdx: Int): Single<BaseResponse<PostResponse>>
 
-    @GET("post/search/{searchWord}")
-    fun getSearchResult(@Path("searchWord") searchWord: String): Single<BaseResponse<List<PostResponse>>>
+    @GET("post/search")
+    fun getSearchResult(@Query("searchWord") searchWord: String): Single<BaseResponse<List<PostResponse>>>
 
 }
