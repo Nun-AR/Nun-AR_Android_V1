@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.nunar.nun_ar_android_v1.R
 import com.nunar.nun_ar_android_v1.adapter.PopularPostAdapter
-import com.nunar.nun_ar_android_v1.adapter.RecentPostAdapter
+import com.nunar.nun_ar_android_v1.adapter.PostAdapter
 import com.nunar.nun_ar_android_v1.databinding.FragmentHomeBinding
 import com.nunar.nun_ar_android_v1.utils.NetworkStatus
 import com.nunar.nun_ar_android_v1.viewmodel.HomeViewModel
@@ -30,7 +30,7 @@ class HomeFragment : Fragment() {
             false)
         binding.lifecycleOwner = viewLifecycleOwner
 
-        val recentPostAdapter = RecentPostAdapter()
+        val recentPostAdapter = PostAdapter()
         binding.rvRecentPost.adapter = recentPostAdapter
 
         val popularPostAdapter = PopularPostAdapter()
@@ -62,7 +62,7 @@ class HomeFragment : Fragment() {
             }
         })
 
-        RecentPostAdapter.onClick.observe(this, {
+        PostAdapter.onClick.observe(this, {
             val action = HomeFragmentDirections.actionHomeFragmentToPostFragment(it)
             findNavController().navigate(action)
         })
@@ -87,4 +87,8 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.refresh()
+    }
 }

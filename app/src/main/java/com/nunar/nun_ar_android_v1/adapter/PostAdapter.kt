@@ -12,8 +12,8 @@ import com.nunar.nun_ar_android_v1.databinding.ItemPostBinding
 import com.nunar.nun_ar_android_v1.model.response.PostResponse
 import com.nunar.nun_ar_android_v1.widget.SingleLiveEvent
 
-class RecentPostAdapter :
-    ListAdapter<PostResponse, RecentPostAdapter.RecentPostViewHolder>(PostResponseDiffUtilCallback) {
+class PostAdapter :
+    ListAdapter<PostResponse, PostAdapter.RecentPostViewHolder>(PostResponseDiffUtilCallback) {
 
     companion object {
         val onClick = SingleLiveEvent<Int>()

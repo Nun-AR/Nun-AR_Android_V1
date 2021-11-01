@@ -3,7 +3,6 @@ package com.nunar.nun_ar_android_v1.view
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,14 +10,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.nunar.nun_ar_android_v1.R
-import com.nunar.nun_ar_android_v1.adapter.SuggestPostAdapter
+import com.nunar.nun_ar_android_v1.adapter.PostAdapter
 import com.nunar.nun_ar_android_v1.databinding.FragmentPostBinding
-import com.nunar.nun_ar_android_v1.model.response.PostResponse
 import com.nunar.nun_ar_android_v1.utils.NetworkStatus
 import com.nunar.nun_ar_android_v1.viewmodel.PostViewModel
+import java.lang.NumberFormatException
 
 class PostFragment : Fragment() {
 
@@ -27,21 +26,26 @@ class PostFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        val binding = DataBindingUtil.inflate<FragmentPostBinding>(inflater, R.layout.fragment_post, container, false)
+    ): View {
+        val binding = DataBindingUtil.inflate<FragmentPostBinding>(inflater,
+            R.layout.fragment_post,
+            container,
+            false)
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.vm = viewModel
 
-        val suggestPostAdapter = SuggestPostAdapter()
+        val suggestPostAdapter = PostAdapter()
         binding.postRecycler.adapter = suggestPostAdapter
 
         arguments?.getInt("postIdx")?.let {
-            Log.e("idx", it.toString())
             viewModel.getIdxPostResult(it)
         }
 
-        viewModel.indexPostResult.observe(viewLifecycleOwner, Observer {
-            when(it) {
-                is NetworkStatus.Error -> Toast.makeText(requireContext(), "${it.throwable.message}", Toast.LENGTH_SHORT).show()
+        viewModel.indexPostResult.observe(viewLifecycleOwner, {
+            when (it) {
+                is NetworkStatus.Error -> Toast.makeText(requireContext(),
+                    "${it.throwable.message}",
+                    Toast.LENGTH_SHORT).show()
                 is NetworkStatus.Loading -> {
 
                 }
@@ -52,9 +56,6 @@ class PostFragment : Fragment() {
                     binding.postTvName.text = it.data.writer
                     binding.postTvTag.text = it.data.tag
                     binding.postBookmark.isSelected = it.data.isBookmarks
-                    binding.postBookmark.setOnClickListener {
-
-                    }
                     binding.postBookmarkCount.text = it.data.bookmarks.toString()
 
                     binding.postDownloadBtn.setOnClickListener {
@@ -64,7 +65,7 @@ class PostFragment : Fragment() {
                         val sceneViewIntent = Intent(Intent.ACTION_VIEW)
                         val url = Uri.parse("https://arvr.google.com/scene-viewer/1.0").buildUpon()
                             .appendQueryParameter("file",
-                                "http://3.37.250.4:8080/model/${fileUrl}")
+                                "https://nun-ar.com/model/${fileUrl}")
                             .appendQueryParameter("mode", "3d_preferred")
                             .build()
                         sceneViewIntent.data = url
@@ -83,15 +84,50 @@ class PostFragment : Fragment() {
             }
         })
 
-        viewModel.popularPostResult.observe(viewLifecycleOwner, Observer {
-            when(it) {
-                is NetworkStatus.Error -> Toast.makeText(requireContext(), "${it.throwable.message}", Toast.LENGTH_SHORT).show()
+        viewModel.popularPostResult.observe(viewLifecycleOwner, {
+            when (it) {
+                is NetworkStatus.Error -> Toast.makeText(requireContext(),
+                    "${it.throwable.message}",
+                    Toast.LENGTH_SHORT).show()
                 is NetworkStatus.Loading -> {
                 }
                 is NetworkStatus.Success -> {
                     suggestPostAdapter.submitList(it.data)
                 }
             }
+        })
+
+        viewModel.bookmarkResult.observe(viewLifecycleOwner, {
+            when (it) {
+                is NetworkStatus.Error -> {
+                    Toast.makeText(requireContext(), it.throwable.message, Toast.LENGTH_SHORT)
+                        .show()
+                }
+                is NetworkStatus.Loading -> {
+                }
+                is NetworkStatus.Success -> {
+                    try {
+                        binding.postBookmarkCount.text =
+                            binding.postBookmarkCount.text
+                                .toString()
+                                .toInt()
+                                .plus(if (it.data) 1 else -1)
+                                .toString()
+                    } catch (e: NumberFormatException) {
+                        Toast.makeText(requireContext(), "북마크 개수가 수가 아닙니다", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            }
+        })
+
+        binding.postBackBtn.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        PostAdapter.onClick.observe(viewLifecycleOwner, {
+            val action = PostFragmentDirections.actionPostFragmentSelf(it)
+            findNavController().navigate(action)
         })
 
         return binding.root

@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.nunar.nun_ar_android_v1.R
-import com.nunar.nun_ar_android_v1.adapter.RecentPostAdapter
+import com.nunar.nun_ar_android_v1.adapter.PostAdapter
 import com.nunar.nun_ar_android_v1.databinding.FragmentUserInfoBinding
 import com.nunar.nun_ar_android_v1.utils.NetworkStatus
 import com.nunar.nun_ar_android_v1.viewmodel.UserInfoViewModel
@@ -32,8 +32,8 @@ class UserInfoFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        val bookmarkPostAdapter = RecentPostAdapter()
-        val myPostAdapter = RecentPostAdapter()
+        val bookmarkPostAdapter = PostAdapter()
+        val myPostAdapter = PostAdapter()
 
         binding.rvBookmarkPost.adapter = bookmarkPostAdapter
         binding.rvUploadPost.adapter = myPostAdapter
@@ -83,11 +83,17 @@ class UserInfoFragment : Fragment() {
             }
         })
 
-        RecentPostAdapter.onClick.observe(viewLifecycleOwner, {
+        PostAdapter.onClick.observe(viewLifecycleOwner, {
             val action = UserInfoFragmentDirections.actionUserInfoFragmentToPostFragment(it)
             findNavController().navigate(action)
         })
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getMyInfo()
+        viewModel.getBookmarkPost()
     }
 }
