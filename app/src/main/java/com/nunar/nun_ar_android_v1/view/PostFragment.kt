@@ -19,6 +19,7 @@ import com.nunar.nun_ar_android_v1.databinding.FragmentPostBinding
 import com.nunar.nun_ar_android_v1.model.response.PostResponse
 import com.nunar.nun_ar_android_v1.utils.NetworkStatus
 import com.nunar.nun_ar_android_v1.viewmodel.PostViewModel
+import java.lang.NumberFormatException
 
 class PostFragment : Fragment() {
 
@@ -27,21 +28,26 @@ class PostFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        val binding = DataBindingUtil.inflate<FragmentPostBinding>(inflater, R.layout.fragment_post, container, false)
+    ): View {
+        val binding = DataBindingUtil.inflate<FragmentPostBinding>(inflater,
+            R.layout.fragment_post,
+            container,
+            false)
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.vm = viewModel
 
         val suggestPostAdapter = SuggestPostAdapter()
         binding.postRecycler.adapter = suggestPostAdapter
 
         arguments?.getInt("postIdx")?.let {
-            Log.e("idx", it.toString())
             viewModel.getIdxPostResult(it)
         }
 
         viewModel.indexPostResult.observe(viewLifecycleOwner, Observer {
-            when(it) {
-                is NetworkStatus.Error -> Toast.makeText(requireContext(), "${it.throwable.message}", Toast.LENGTH_SHORT).show()
+            when (it) {
+                is NetworkStatus.Error -> Toast.makeText(requireContext(),
+                    "${it.throwable.message}",
+                    Toast.LENGTH_SHORT).show()
                 is NetworkStatus.Loading -> {
 
                 }
@@ -52,9 +58,6 @@ class PostFragment : Fragment() {
                     binding.postTvName.text = it.data.writer
                     binding.postTvTag.text = it.data.tag
                     binding.postBookmark.isSelected = it.data.isBookmarks
-                    binding.postBookmark.setOnClickListener {
-
-                    }
                     binding.postBookmarkCount.text = it.data.bookmarks.toString()
 
                     binding.postDownloadBtn.setOnClickListener {
@@ -64,7 +67,7 @@ class PostFragment : Fragment() {
                         val sceneViewIntent = Intent(Intent.ACTION_VIEW)
                         val url = Uri.parse("https://arvr.google.com/scene-viewer/1.0").buildUpon()
                             .appendQueryParameter("file",
-                                "http://3.37.250.4:8080/model/${fileUrl}")
+                                "https://nun-ar.com/model/${fileUrl}")
                             .appendQueryParameter("mode", "3d_preferred")
                             .build()
                         sceneViewIntent.data = url
@@ -84,12 +87,38 @@ class PostFragment : Fragment() {
         })
 
         viewModel.popularPostResult.observe(viewLifecycleOwner, Observer {
-            when(it) {
-                is NetworkStatus.Error -> Toast.makeText(requireContext(), "${it.throwable.message}", Toast.LENGTH_SHORT).show()
+            when (it) {
+                is NetworkStatus.Error -> Toast.makeText(requireContext(),
+                    "${it.throwable.message}",
+                    Toast.LENGTH_SHORT).show()
                 is NetworkStatus.Loading -> {
                 }
                 is NetworkStatus.Success -> {
                     suggestPostAdapter.submitList(it.data)
+                }
+            }
+        })
+
+        viewModel.bookmarkResult.observe(viewLifecycleOwner, {
+            when (it) {
+                is NetworkStatus.Error -> {
+                    Toast.makeText(requireContext(), it.throwable.message, Toast.LENGTH_SHORT)
+                        .show()
+                }
+                is NetworkStatus.Loading -> {
+                }
+                is NetworkStatus.Success -> {
+                    try {
+                        binding.postBookmarkCount.text =
+                            binding.postBookmarkCount.text
+                                .toString()
+                                .toInt()
+                                .plus(if (it.data) 1 else -1)
+                                .toString()
+                    } catch (e: NumberFormatException) {
+                        Toast.makeText(requireContext(), "북마크 개수가 수가 아닙니다", Toast.LENGTH_SHORT)
+                            .show()
+                    }
                 }
             }
         })
