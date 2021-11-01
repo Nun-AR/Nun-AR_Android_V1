@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="vm"
+            type="com.nunar.nun_ar_android_v1.viewmodel.WritePostViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,18 +18,16 @@
 
         <ImageButton
             android:id="@+id/write_backBtn"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_back_arrow" />
+            android:src="@drawable/ic_back_arrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/et_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/write_backBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -36,39 +37,43 @@
             android:hint="타이틀을 입력해주세요"
             android:inputType="text"
             android:padding="10dp"
+            android:text="@={vm.title}"
             android:textColor="@color/white"
             android:textColorHint="@color/hint_color"
             android:textFontWeight="700"
-            android:textSize="19sp" />
+            android:textSize="19sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/write_backBtn" />
 
         <ImageButton
             android:id="@+id/fileUploadBtn"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_upload" />
+            android:src="@drawable/ic_upload"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_title" />
 
         <EditText
             android:id="@+id/et_tag"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fileUploadBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="128dp"
             android:background="@android:color/transparent"
             android:fontFamily="sans-serif"
             android:hint="태그를 입력해주세요"
             android:inputType="text"
             android:padding="10dp"
+            android:text="@={vm.tag}"
             android:textColor="@color/white"
             android:textColorHint="@color/hint_color"
             android:textFontWeight="700"
-            android:textSize="19sp" />
+            android:textSize="19sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_title" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/write_uploadBtn"
@@ -85,6 +90,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/modelView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -134,17 +140,17 @@
 
         <LinearLayout
             android:id="@+id/imageUploadView"
-            app:layout_constraintBottom_toTopOf="@+id/write_uploadBtn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_tag"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
             android:background="@drawable/background_image_upload"
             android:orientation="vertical"
-            android:padding="15dp">
+            android:padding="15dp"
+            app:layout_constraintBottom_toTopOf="@+id/write_uploadBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_tag">
 
             <ImageView
                 android:id="@+id/imageUploadIcon"
@@ -169,22 +175,23 @@
 
         <FrameLayout
             android:id="@+id/imageView"
-            app:layout_constraintBottom_toTopOf="@+id/write_uploadBtn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_tag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="200dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="32dp"
-            android:visibility="invisible">
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/write_uploadBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_tag">
 
             <ImageView
                 android:id="@+id/thumbnailImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
                 tools:src="@tools:sample/avatars" />
 
             <ImageButton
