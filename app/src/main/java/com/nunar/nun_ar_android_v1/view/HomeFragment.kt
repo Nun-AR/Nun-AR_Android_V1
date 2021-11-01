@@ -80,6 +80,10 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_home_fragment_to_write_post_fragment)
         }
 
+        binding.btnUserInfo.setOnClickListener {
+            findNavController().navigate(R.id.action_home_fragment_to_user_info_fragment)
+        }
+
         return binding.root
     }
 
