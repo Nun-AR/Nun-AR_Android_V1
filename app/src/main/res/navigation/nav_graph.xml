@@ -27,7 +27,11 @@
             app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_home_fragment_to_write_post_fragment"
-            app:destination="@id/write_post_fragment" />
+            app:destination="@id/write_post_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_home_fragment_to_user_info_fragment"
             app:destination="@id/user_info_fragment"
@@ -86,7 +90,11 @@
          <action
              android:id="@+id/action_write_post_fragment_to_post_fragment"
              app:destination="@id/post_fragment"
-             app:popUpTo="@id/home_fragment" />
+             app:popUpTo="@id/home_fragment"
+             app:enterAnim="@anim/slide_in_right"
+             app:exitAnim="@anim/slide_out_left"
+             app:popEnterAnim="@anim/slide_in_left"
+             app:popExitAnim="@anim/slide_out_right" />
          <argument
              android:name="pageIdx"
              app:argType="integer" />
@@ -106,7 +114,11 @@
             app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_user_info_fragment_to_modify_user_info_fragment"
-            app:destination="@id/modify_user_info_fragment" />
+            app:destination="@id/modify_user_info_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
