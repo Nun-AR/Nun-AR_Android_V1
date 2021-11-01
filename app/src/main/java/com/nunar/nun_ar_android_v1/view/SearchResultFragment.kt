@@ -8,11 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.nunar.nun_ar_android_v1.R
-import com.nunar.nun_ar_android_v1.adapter.SearchResultAdapter
+import com.nunar.nun_ar_android_v1.adapter.PostAdapter
 import com.nunar.nun_ar_android_v1.databinding.FragmentSearchResultBinding
 import com.nunar.nun_ar_android_v1.utils.NetworkStatus
 import com.nunar.nun_ar_android_v1.viewmodel.SearchResultViewModel
@@ -28,7 +26,7 @@ class SearchResultFragment : Fragment() {
         val binding = DataBindingUtil.inflate<FragmentSearchResultBinding>(inflater, R.layout.fragment_search_result, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
 
-        val searchResultAdapter = SearchResultAdapter()
+        val searchResultAdapter = PostAdapter()
         binding.resultRvList.adapter = searchResultAdapter
 
         val searchKeyword = arguments?.getString("searchWord")
@@ -47,12 +45,10 @@ class SearchResultFragment : Fragment() {
             }
         })
 
-        SearchResultAdapter.onClick.observe(this, {
+        PostAdapter.onClick.observe(this, {
             val action = SearchResultFragmentDirections.actionSearchResultFragmentToPostFragment(it)
             findNavController().navigate(action)
         })
-
-
 
         return binding.root
     }

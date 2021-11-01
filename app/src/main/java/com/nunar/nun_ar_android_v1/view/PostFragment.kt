@@ -3,7 +3,6 @@ package com.nunar.nun_ar_android_v1.view
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,12 +10,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.nunar.nun_ar_android_v1.R
-import com.nunar.nun_ar_android_v1.adapter.SuggestPostAdapter
+import com.nunar.nun_ar_android_v1.adapter.PostAdapter
 import com.nunar.nun_ar_android_v1.databinding.FragmentPostBinding
-import com.nunar.nun_ar_android_v1.model.response.PostResponse
 import com.nunar.nun_ar_android_v1.utils.NetworkStatus
 import com.nunar.nun_ar_android_v1.viewmodel.PostViewModel
 import java.lang.NumberFormatException
@@ -36,14 +34,14 @@ class PostFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = viewModel
 
-        val suggestPostAdapter = SuggestPostAdapter()
+        val suggestPostAdapter = PostAdapter()
         binding.postRecycler.adapter = suggestPostAdapter
 
         arguments?.getInt("postIdx")?.let {
             viewModel.getIdxPostResult(it)
         }
 
-        viewModel.indexPostResult.observe(viewLifecycleOwner, Observer {
+        viewModel.indexPostResult.observe(viewLifecycleOwner, {
             when (it) {
                 is NetworkStatus.Error -> Toast.makeText(requireContext(),
                     "${it.throwable.message}",
@@ -86,7 +84,7 @@ class PostFragment : Fragment() {
             }
         })
 
-        viewModel.popularPostResult.observe(viewLifecycleOwner, Observer {
+        viewModel.popularPostResult.observe(viewLifecycleOwner, {
             when (it) {
                 is NetworkStatus.Error -> Toast.makeText(requireContext(),
                     "${it.throwable.message}",
@@ -121,6 +119,15 @@ class PostFragment : Fragment() {
                     }
                 }
             }
+        })
+
+        binding.postBackBtn.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        PostAdapter.onClick.observe(viewLifecycleOwner, {
+            val action = PostFragmentDirections.actionPostFragmentSelf(it)
+            findNavController().navigate(action)
         })
 
         return binding.root
