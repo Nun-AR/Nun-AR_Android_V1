@@ -50,19 +50,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tv_my"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:fontFamily="@font/nanum_gothic"
-                android:text="My"
-                android:textColor="@color/white"
-                android:textFontWeight="700"
-                android:textSize="25sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn_write"
-                app:layout_constraintTop_toTopOf="parent" />
+<!--            <TextView-->
+<!--                android:id="@+id/tv_my"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginEnd="24dp"-->
+<!--                android:fontFamily="@font/nanum_gothic"-->
+<!--                android:text="My"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textFontWeight="700"-->
+<!--                android:textSize="25sp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/btn_write"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -94,6 +94,7 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_recent_post"
+                    android:overScrollMode="never"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"

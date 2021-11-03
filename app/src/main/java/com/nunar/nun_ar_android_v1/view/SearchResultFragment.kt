@@ -45,6 +45,10 @@ class SearchResultFragment : Fragment() {
             }
         })
 
+        binding.resultBackBtn.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         PostAdapter.onClick.observe(this, {
             val action = SearchResultFragmentDirections.actionSearchResultFragmentToPostFragment(it)
             findNavController().navigate(action)
