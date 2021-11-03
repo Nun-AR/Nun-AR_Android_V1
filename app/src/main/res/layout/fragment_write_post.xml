@@ -36,7 +36,6 @@
             android:fontFamily="sans-serif"
             android:hint="타이틀을 입력해주세요"
             android:inputType="text"
-            android:padding="10dp"
             android:text="@={vm.title}"
             android:textColor="@color/white"
             android:textColorHint="@color/hint_color"

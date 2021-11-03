@@ -87,6 +87,9 @@ class ModifyUserInfoFragment : Fragment() {
             }
         })
 
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
         binding.btnUploadImage.setOnClickListener {
             val intent = Intent().setType("image/*").setAction(Intent.ACTION_GET_CONTENT)
