@@ -230,14 +230,10 @@ class WritePostFragment : Fragment() {
 
     fun checkPermission() {
         val permission = android.Manifest.permission.READ_EXTERNAL_STORAGE
-        val permissionResult = ContextCompat.checkSelfPermission(requireContext(), permission)
 
-        when (permissionResult) {
+        when (ContextCompat.checkSelfPermission(requireContext(), permission)) {
             PackageManager.PERMISSION_DENIED -> {
                 ActivityCompat.requestPermissions(requireActivity(), arrayOf(permission), 100)
-            }
-            PackageManager.PERMISSION_GRANTED -> {
-                Toast.makeText(requireContext(), "권한 존재함", Toast.LENGTH_SHORT).show()
             }
         }
 
