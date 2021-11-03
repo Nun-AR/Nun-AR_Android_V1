@@ -3,6 +3,7 @@ package com.nunar.nun_ar_android_v1.view
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +18,10 @@ import com.nunar.nun_ar_android_v1.adapter.PostAdapter
 import com.nunar.nun_ar_android_v1.databinding.FragmentPostBinding
 import com.nunar.nun_ar_android_v1.utils.NetworkStatus
 import com.nunar.nun_ar_android_v1.viewmodel.PostViewModel
+import java.io.File
+import java.io.FileOutputStream
 import java.lang.NumberFormatException
+import java.net.URL
 
 class PostFragment : Fragment() {
 
@@ -58,8 +62,36 @@ class PostFragment : Fragment() {
                     binding.postBookmark.isSelected = it.data.isBookmarks
                     binding.postBookmarkCount.text = it.data.bookmarks.toString()
 
-                    binding.postDownloadBtn.setOnClickListener {
+                    binding.postDownloadBtn.setOnClickListener { _ ->
+                        Thread {
+                            try{
+                                val url = URL("https://nun-ar.com/model/${it.data.fileUrl}")
+                                val folder = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "")
 
+                                val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "${it.data.title}.gltf")
+
+                                if(!folder.exists()) {
+                                    folder.mkdirs()
+                                }
+                                if(file.exists()) {
+                                    file.createNewFile()
+                                }
+
+                                url.openStream().use { input ->
+                                    requireActivity().runOnUiThread {
+                                        Toast.makeText(requireContext(), "${it.data.title}.gltf 다운로드", Toast.LENGTH_SHORT).show()
+                                    }
+                                    FileOutputStream(file).use { outputStream ->
+                                        input.copyTo(outputStream)
+                                    }
+                                }
+                            } catch (e: Exception) {
+                                requireActivity().runOnUiThread {
+                                    e.printStackTrace()
+                                    Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }.start()
                     }
                     binding.postArRunBtn.setOnClickListener {
                         val sceneViewIntent = Intent(Intent.ACTION_VIEW)
