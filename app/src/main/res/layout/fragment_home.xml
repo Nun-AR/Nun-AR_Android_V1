@@ -20,9 +20,10 @@
 
             <ImageView
                 android:id="@+id/btn_search"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:padding="16dp"
                 android:src="@drawable/ic_search"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -34,6 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
                 android:background="@android:color/transparent"
+                android:padding="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_user_info"
                 app:layout_constraintTop_toTopOf="parent"
@@ -42,27 +44,28 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/btn_user_info"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:padding="8dp"
                 android:src="@mipmap/ic_launcher"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-<!--            <TextView-->
-<!--                android:id="@+id/tv_my"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginEnd="24dp"-->
-<!--                android:fontFamily="@font/nanum_gothic"-->
-<!--                android:text="My"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textFontWeight="700"-->
-<!--                android:textSize="25sp"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toStartOf="@+id/btn_write"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
+            <!--            <TextView-->
+            <!--                android:id="@+id/tv_my"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginEnd="24dp"-->
+            <!--                android:fontFamily="@font/nanum_gothic"-->
+            <!--                android:text="My"-->
+            <!--                android:textColor="@color/white"-->
+            <!--                android:textFontWeight="700"-->
+            <!--                android:textSize="25sp"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toStartOf="@+id/btn_write"-->
+            <!--                app:layout_constraintTop_toTopOf="parent" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -94,12 +97,12 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_recent_post"
-                    android:overScrollMode="never"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginTop="20dp"
                     android:orientation="vertical"
+                    android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                     app:spanCount="2"
                     tools:listitem="@layout/item_post" />

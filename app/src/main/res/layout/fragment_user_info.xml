@@ -18,6 +18,7 @@
 
         <ImageButton
             android:id="@+id/btn_back"
+            android:padding="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -32,6 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
+            android:padding="16dp"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_modify_user_info_2"
             app:layout_constraintBottom_toBottomOf="@id/btn_back"
