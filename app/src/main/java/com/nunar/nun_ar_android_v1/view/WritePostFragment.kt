@@ -151,7 +151,7 @@ class WritePostFragment : Fragment() {
 
                     binding.fileUploadBtn.isVisible = false
                     binding.modelView.isVisible = true
-                    binding.tvFileName.text = file.name
+                    binding.tvFileName.text = data.data?.path?.split("/")?.last().toString()
 
                     checkInput[1] = 1
                     viewModel.modelFile.value = file
