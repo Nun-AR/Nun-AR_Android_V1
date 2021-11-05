@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Nun-AR_Android_V1</string>
+    <string name="app_name">눈알</string>
     <string name="id">아이디</string>
     <string name="password">비밀번호</string>
     <string name="login">로그인</string>
