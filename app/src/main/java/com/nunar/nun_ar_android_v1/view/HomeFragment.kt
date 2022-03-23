@@ -36,9 +36,11 @@ class HomeFragment : Fragment() {
         val popularPostAdapter = PopularPostAdapter()
         binding.vpPopularPost.adapter = popularPostAdapter
 
-        viewModel.popularPostResult.observe(viewLifecycleOwner, {
-            when(it) {
-                is NetworkStatus.Error -> Toast.makeText(requireContext(), "${it.throwable.message}", Toast.LENGTH_SHORT).show()
+        viewModel.popularPostResult.observe(viewLifecycleOwner) {
+            when (it) {
+                is NetworkStatus.Error -> Toast.makeText(requireContext(),
+                    "${it.throwable.message}",
+                    Toast.LENGTH_SHORT).show()
                 is NetworkStatus.Loading -> {
 
                 }
@@ -46,10 +48,10 @@ class HomeFragment : Fragment() {
                     popularPostAdapter.submitList(it.data)
                 }
             }
-        })
+        }
 
-        viewModel.recentPostListResult.observe(viewLifecycleOwner, {
-            when(it) {
+        viewModel.recentPostListResult.observe(viewLifecycleOwner) {
+            when (it) {
                 is NetworkStatus.Error -> {
 
                 }
@@ -60,17 +62,17 @@ class HomeFragment : Fragment() {
                     recentPostAdapter.submitList(it.data)
                 }
             }
-        })
+        }
 
-        PostAdapter.onClick.observe(this, {
+        PostAdapter.onClick.observe(this) {
             val action = HomeFragmentDirections.actionHomeFragmentToPostFragment(it)
             findNavController().navigate(action)
-        })
+        }
 
-        PopularPostAdapter.onClick.observe(this, {
+        PopularPostAdapter.onClick.observe(this) {
             val action = HomeFragmentDirections.actionHomeFragmentToPostFragment(it)
             findNavController().navigate(action)
-        })
+        }
 
         binding.btnSearch.setOnClickListener {
             findNavController().navigate(R.id.action_home_fragment_to_search_fragment)

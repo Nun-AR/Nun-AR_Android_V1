@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.nunar.nun_ar_android_v1.R
 import com.nunar.nun_ar_android_v1.adapter.PostAdapter
 import com.nunar.nun_ar_android_v1.databinding.FragmentUserInfoBinding
+import com.nunar.nun_ar_android_v1.model.Server.DOMAIN
 import com.nunar.nun_ar_android_v1.utils.NetworkStatus
 import com.nunar.nun_ar_android_v1.viewmodel.UserInfoViewModel
 
@@ -38,55 +39,61 @@ class UserInfoFragment : Fragment() {
         binding.rvBookmarkPost.adapter = bookmarkPostAdapter
         binding.rvUploadPost.adapter = myPostAdapter
 
-        viewModel.getMyInfoResult.observe(viewLifecycleOwner, {
-            when(it) {
+        viewModel.getMyInfoResult.observe(viewLifecycleOwner) {
+            when (it) {
                 is NetworkStatus.Error -> {
-                    Toast.makeText(this.requireContext(), it.throwable.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this.requireContext(), it.throwable.message, Toast.LENGTH_SHORT)
+                        .show()
                 }
                 is NetworkStatus.Loading -> {}
                 is NetworkStatus.Success -> {
                     Glide.with(this.requireContext())
-                        .load("https://nun-ar.com/image/${it.data.profileUrl}")
+                        .load("${DOMAIN}image/${it.data.profileUrl}")
                         .into(binding.ivProfile)
 
                     binding.tvName.text = it.data.name
 
                     binding.btnModifyUserInfo.setOnClickListener { _ ->
-                        val action = UserInfoFragmentDirections.actionUserInfoFragmentToModifyUserInfoFragment(it.data.name, it.data.profileUrl)
+                        val action =
+                            UserInfoFragmentDirections.actionUserInfoFragmentToModifyUserInfoFragment(
+                                it.data.name,
+                                it.data.profileUrl)
                         findNavController().navigate(action)
                     }
                 }
             }
-        })
+        }
 
-        viewModel.getBookmarkPostResult.observe(viewLifecycleOwner, {
-            when(it) {
+        viewModel.getBookmarkPostResult.observe(viewLifecycleOwner) {
+            when (it) {
                 is NetworkStatus.Error -> {
-                    Toast.makeText(this.requireContext(), it.throwable.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this.requireContext(), it.throwable.message, Toast.LENGTH_SHORT)
+                        .show()
                 }
                 is NetworkStatus.Loading -> {}
                 is NetworkStatus.Success -> {
                     bookmarkPostAdapter.submitList(it.data)
                 }
             }
-        })
+        }
 
-        viewModel.getMyPostResult.observe(viewLifecycleOwner, {
-            when(it) {
+        viewModel.getMyPostResult.observe(viewLifecycleOwner) {
+            when (it) {
                 is NetworkStatus.Error -> {
-                    Toast.makeText(this.requireContext(), it.throwable.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this.requireContext(), it.throwable.message, Toast.LENGTH_SHORT)
+                        .show()
                 }
                 is NetworkStatus.Loading -> {}
                 is NetworkStatus.Success -> {
                     myPostAdapter.submitList(it.data)
                 }
             }
-        })
+        }
 
-        PostAdapter.onClick.observe(viewLifecycleOwner, {
+        PostAdapter.onClick.observe(viewLifecycleOwner) {
             val action = UserInfoFragmentDirections.actionUserInfoFragmentToPostFragment(it)
             findNavController().navigate(action)
-        })
+        }
 
         return binding.root
     }

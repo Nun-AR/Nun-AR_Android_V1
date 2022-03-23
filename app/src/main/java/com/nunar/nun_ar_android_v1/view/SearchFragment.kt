@@ -57,7 +57,7 @@ class SearchFragment : Fragment() {
             viewModel.getRecentSearchWord()
         }
 
-        viewModel.suggestionTagResult.observe(this.viewLifecycleOwner, {
+        viewModel.suggestionTagResult.observe(this.viewLifecycleOwner) {
             when (it) {
                 is NetworkStatus.Error -> {
                     Toast.makeText(this.requireContext(),
@@ -71,9 +71,9 @@ class SearchFragment : Fragment() {
                     suggestionTagAdapter.submitList(it.data)
                 }
             }
-        })
+        }
 
-        viewModel.recentSearchWordResult.observe(this.viewLifecycleOwner, {
+        viewModel.recentSearchWordResult.observe(this.viewLifecycleOwner) {
             when (it) {
                 is NetworkStatus.Error -> {
                     Toast.makeText(this.requireContext(),
@@ -87,7 +87,7 @@ class SearchFragment : Fragment() {
                     recentSearchWordAdapter.submitList(it.data)
                 }
             }
-        })
+        }
 
         binding.btnSearch.setOnClickListener {
             binding.etSearchWord.requestFocus()
@@ -116,21 +116,21 @@ class SearchFragment : Fragment() {
             return@setOnKeyListener true
         }
 
-        SuggestionTagAdapter.onClick.observe(this.viewLifecycleOwner, {
+        SuggestionTagAdapter.onClick.observe(this.viewLifecycleOwner) {
             lifecycleScope.launch {
                 viewModel.addRecentSearchWord(it)
                 val action = SearchFragmentDirections.actionSearchFragmentToSearchResultFragment(it)
                 findNavController().navigate(action)
             }
-        })
+        }
 
-        RecentSearchWordAdapter.onClick.observe(viewLifecycleOwner, {
+        RecentSearchWordAdapter.onClick.observe(viewLifecycleOwner) {
             lifecycleScope.launch {
                 viewModel.addRecentSearchWord(it)
                 val action = SearchFragmentDirections.actionSearchFragmentToSearchResultFragment(it)
                 findNavController().navigate(action)
             }
-        })
+        }
 
         binding.tvEraseAll.setOnClickListener {
             lifecycleScope.launch {

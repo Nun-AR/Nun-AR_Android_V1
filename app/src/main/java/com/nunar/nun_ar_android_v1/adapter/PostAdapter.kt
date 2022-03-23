@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.nunar.nun_ar_android_v1.R
 import com.nunar.nun_ar_android_v1.adapter.callback.PostResponseDiffUtilCallback
 import com.nunar.nun_ar_android_v1.databinding.ItemPostBinding
+import com.nunar.nun_ar_android_v1.model.Server.DOMAIN
 import com.nunar.nun_ar_android_v1.model.response.PostResponse
 import com.nunar.nun_ar_android_v1.widget.SingleLiveEvent
 
@@ -35,7 +36,7 @@ class PostAdapter :
             }
 
             Glide.with(binding.root.context)
-                .load("https://nun-ar.com/image/${post.thumbnail}")
+                .load("${DOMAIN}image/${post.thumbnail}")
                 .into(binding.ivThumbnail)
 
         }

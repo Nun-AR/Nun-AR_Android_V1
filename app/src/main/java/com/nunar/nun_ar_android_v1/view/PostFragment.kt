@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.nunar.nun_ar_android_v1.R
 import com.nunar.nun_ar_android_v1.adapter.PostAdapter
 import com.nunar.nun_ar_android_v1.databinding.FragmentPostBinding
+import com.nunar.nun_ar_android_v1.model.Server.DOMAIN
 import com.nunar.nun_ar_android_v1.utils.NetworkStatus
 import com.nunar.nun_ar_android_v1.viewmodel.PostViewModel
 import java.io.File
@@ -45,7 +46,7 @@ class PostFragment : Fragment() {
             viewModel.getIdxPostResult(it)
         }
 
-        viewModel.indexPostResult.observe(viewLifecycleOwner, {
+        viewModel.indexPostResult.observe(viewLifecycleOwner) {
             when (it) {
                 is NetworkStatus.Error -> Toast.makeText(requireContext(),
                     "${it.throwable.message}",
@@ -64,22 +65,28 @@ class PostFragment : Fragment() {
 
                     binding.postDownloadBtn.setOnClickListener { _ ->
                         Thread {
-                            try{
-                                val url = URL("https://nun-ar.com/model/${it.data.fileUrl}")
-                                val folder = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "")
+                            try {
+                                val url = URL("${DOMAIN}model/${it.data.fileUrl}")
+                                val folder =
+                                    File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                                        "")
 
-                                val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "${it.data.title}.gltf")
+                                val file =
+                                    File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                                        "${it.data.title}.gltf")
 
-                                if(!folder.exists()) {
+                                if (!folder.exists()) {
                                     folder.mkdirs()
                                 }
-                                if(file.exists()) {
+                                if (file.exists()) {
                                     file.createNewFile()
                                 }
 
                                 url.openStream().use { input ->
                                     requireActivity().runOnUiThread {
-                                        Toast.makeText(requireContext(), "${it.data.title}.gltf 다운로드", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(requireContext(),
+                                            "${it.data.title}.gltf 다운로드",
+                                            Toast.LENGTH_SHORT).show()
                                     }
                                     FileOutputStream(file).use { outputStream ->
                                         input.copyTo(outputStream)
@@ -88,7 +95,8 @@ class PostFragment : Fragment() {
                             } catch (e: Exception) {
                                 requireActivity().runOnUiThread {
                                     e.printStackTrace()
-                                    Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT)
+                                        .show()
                                 }
                             }
                         }.start()
@@ -97,7 +105,7 @@ class PostFragment : Fragment() {
                         val sceneViewIntent = Intent(Intent.ACTION_VIEW)
                         val url = Uri.parse("https://arvr.google.com/scene-viewer/1.0").buildUpon()
                             .appendQueryParameter("file",
-                                "https://nun-ar.com/model/${fileUrl}")
+                                "${DOMAIN}model/${fileUrl}")
                             .appendQueryParameter("mode", "3d_preferred")
                             .build()
                         sceneViewIntent.data = url
@@ -106,17 +114,17 @@ class PostFragment : Fragment() {
                     }
 
                     Glide.with(this)
-                        .load("https://nun-ar.com/image/${it.data.thumbnail}")
+                        .load("${DOMAIN}image/${it.data.thumbnail}")
                         .into(binding.postImageView)
 
                     Glide.with(this)
-                        .load("https://nun-ar.com/image/${it.data.profileUrl}")
+                        .load("${DOMAIN}image/${it.data.profileUrl}")
                         .into(binding.postUserImage)
                 }
             }
-        })
+        }
 
-        viewModel.popularPostResult.observe(viewLifecycleOwner, {
+        viewModel.popularPostResult.observe(viewLifecycleOwner) {
             when (it) {
                 is NetworkStatus.Error -> Toast.makeText(requireContext(),
                     "${it.throwable.message}",
@@ -127,9 +135,9 @@ class PostFragment : Fragment() {
                     suggestPostAdapter.submitList(it.data)
                 }
             }
-        })
+        }
 
-        viewModel.bookmarkResult.observe(viewLifecycleOwner, {
+        viewModel.bookmarkResult.observe(viewLifecycleOwner) {
             when (it) {
                 is NetworkStatus.Error -> {
                     Toast.makeText(requireContext(), it.throwable.message, Toast.LENGTH_SHORT)
@@ -151,16 +159,16 @@ class PostFragment : Fragment() {
                     }
                 }
             }
-        })
+        }
 
         binding.postBackBtn.setOnClickListener {
             findNavController().popBackStack()
         }
 
-        PostAdapter.onClick.observe(viewLifecycleOwner, {
+        PostAdapter.onClick.observe(viewLifecycleOwner) {
             val action = PostFragmentDirections.actionPostFragmentSelf(it)
             findNavController().navigate(action)
-        })
+        }
 
         return binding.root
     }

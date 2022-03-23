@@ -17,6 +17,9 @@
         android:theme="@style/Theme.NunAR_Android_V1"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".view.SignupActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.LoginActivity"
             android:exported="true">
             <intent-filter>

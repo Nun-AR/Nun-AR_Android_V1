@@ -33,9 +33,11 @@ class SearchResultFragment : Fragment() {
         viewModel.getSearchList(searchKeyword?: "")
         binding.resultTvResult.text = "${searchKeyword}의 검색 결과"
 
-        viewModel.searchResult.observe(viewLifecycleOwner, {
-            when(it){
-                is NetworkStatus.Error -> Toast.makeText(requireContext(), "${it.throwable.message}", Toast.LENGTH_SHORT).show()
+        viewModel.searchResult.observe(viewLifecycleOwner) {
+            when (it) {
+                is NetworkStatus.Error -> Toast.makeText(requireContext(),
+                    "${it.throwable.message}",
+                    Toast.LENGTH_SHORT).show()
                 is NetworkStatus.Loading -> {
 
                 }
@@ -43,16 +45,16 @@ class SearchResultFragment : Fragment() {
                     searchResultAdapter.submitList(it.data)
                 }
             }
-        })
+        }
 
         binding.resultBackBtn.setOnClickListener {
             findNavController().popBackStack()
         }
 
-        PostAdapter.onClick.observe(this, {
+        PostAdapter.onClick.observe(this) {
             val action = SearchResultFragmentDirections.actionSearchResultFragmentToPostFragment(it)
             findNavController().navigate(action)
-        })
+        }
 
         return binding.root
     }

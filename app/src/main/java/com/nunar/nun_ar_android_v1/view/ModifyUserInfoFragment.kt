@@ -21,6 +21,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.nunar.nun_ar_android_v1.R
 import com.nunar.nun_ar_android_v1.databinding.FragmentModifyUserInfoBinding
+import com.nunar.nun_ar_android_v1.model.Server.DOMAIN
 import com.nunar.nun_ar_android_v1.utils.NetworkStatus
 import com.nunar.nun_ar_android_v1.viewmodel.ModifyUserInfoViewModel
 import java.io.File
@@ -58,22 +59,22 @@ class ModifyUserInfoFragment : Fragment() {
             viewModel.profileUrl.value = profileUrl
         }
 
-        viewModel.profileUrl.observe(viewLifecycleOwner, {
+        viewModel.profileUrl.observe(viewLifecycleOwner) {
             Glide.with(this.requireContext())
-                .load("https://nun-ar.com/image/${it}")
+                .load("${DOMAIN}image/${it}")
                 .into(binding.ivProfile)
-        })
+        }
 
-        viewModel.file.observe(viewLifecycleOwner, {
+        viewModel.file.observe(viewLifecycleOwner) {
             val bitmap = BitmapFactory.decodeFile(it.path)
 
             Glide.with(this.requireContext())
                 .load(bitmap)
                 .into(binding.ivProfile)
-        })
+        }
 
 
-        viewModel.modifyUserInfoResult.observe(viewLifecycleOwner, {
+        viewModel.modifyUserInfoResult.observe(viewLifecycleOwner) {
             when (it) {
                 is NetworkStatus.Error -> {
                     Toast.makeText(requireContext(), it.throwable.message, Toast.LENGTH_SHORT)
@@ -85,7 +86,7 @@ class ModifyUserInfoFragment : Fragment() {
                     findNavController().popBackStack()
                 }
             }
-        })
+        }
 
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
