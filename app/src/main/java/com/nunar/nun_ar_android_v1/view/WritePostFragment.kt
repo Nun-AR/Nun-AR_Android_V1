@@ -221,7 +221,7 @@ class WritePostFragment : Fragment() {
             while (inputStream.read(buf).also { len = it } > 0) outputStream.write(buf, 0, len)
             outputStream.close()
             inputStream.close()
-            return file.getAbsolutePath()
+            return file.absolutePath
         } catch (e: Exception) {
             return null
         }

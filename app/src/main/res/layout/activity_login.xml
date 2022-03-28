@@ -5,6 +5,10 @@
     <data>
 
         <variable
+            name="activity"
+            type="com.nunar.nun_ar_android_v1.view.LoginActivity" />
+
+        <variable
             name="vm"
             type="com.nunar.nun_ar_android_v1.viewmodel.LoginViewModel" />
     </data>
@@ -22,13 +26,13 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nun\nAR"
-            android:fontFamily="@font/nanum_gothic_bold"
-            android:textColor="#EFEDED"
-            android:textSize="48sp"
-            android:layout_marginTop="80dp"
             android:layout_gravity="center_horizontal"
-            android:gravity="center"/>
+            android:layout_marginTop="80dp"
+            android:fontFamily="@font/nanum_gothic_bold"
+            android:gravity="center"
+            android:text="Nun\nAR"
+            android:textColor="#EFEDED"
+            android:textSize="48sp" />
 
         <View
             android:layout_width="wrap_content"
@@ -103,6 +107,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> activity.onClickRegister()}"
+                android:padding="12dp"
                 android:text="@string/register"
                 android:textColor="@color/white"
                 android:textSize="20sp"

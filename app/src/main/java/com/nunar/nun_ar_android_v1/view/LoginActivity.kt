@@ -1,10 +1,10 @@
 package com.nunar.nun_ar_android_v1.view
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -27,6 +27,7 @@ class LoginActivity : AppCompatActivity() {
 
         binding.lifecycleOwner = this
         binding.vm = viewModel
+        binding.activity = this
 
         viewModel.loginResult.observe(this) {
             when (it) {
@@ -53,5 +54,10 @@ class LoginActivity : AppCompatActivity() {
         tokenDataStore.edit { pref ->
             pref[tokenKey] = token
         }
+    }
+
+    fun onClickRegister() {
+        val intent = Intent(this, SignupActivity::class.java)
+        startActivity(intent)
     }
 }
