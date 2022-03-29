@@ -125,7 +125,7 @@ class WritePostFragment : Fragment() {
         })
 
         binding.deleteImageBtn.setOnClickListener {
-            binding.imageUploadView.isInvisible = true
+            binding.imageUploadView.isVisible = true
             binding.imageView.isVisible = false
             checkInput[0] = 0
         }

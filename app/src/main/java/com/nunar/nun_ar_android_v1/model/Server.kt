@@ -17,6 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object Server {
 
     val DOMAIN = "http://13.125.197.20:8080/v1/"
+    val DOMAIN_FILE = "http://13.125.197.20:8080/"
 
     class TokenInterceptor : Interceptor {
         private val tokenKey = stringPreferencesKey("token")

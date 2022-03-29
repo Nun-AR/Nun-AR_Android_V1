@@ -1,18 +1,21 @@
 package com.nunar.nun_ar_android_v1.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.nunar.nun_ar_android_v1.R
 import com.nunar.nun_ar_android_v1.adapter.PopularPostAdapter
 import com.nunar.nun_ar_android_v1.adapter.PostAdapter
 import com.nunar.nun_ar_android_v1.databinding.FragmentHomeBinding
+import com.nunar.nun_ar_android_v1.model.Server.DOMAIN
+import com.nunar.nun_ar_android_v1.model.Server.DOMAIN_FILE
 import com.nunar.nun_ar_android_v1.utils.NetworkStatus
 import com.nunar.nun_ar_android_v1.viewmodel.HomeViewModel
 
@@ -60,6 +63,22 @@ class HomeFragment : Fragment() {
                 }
                 is NetworkStatus.Success -> {
                     recentPostAdapter.submitList(it.data)
+                }
+            }
+        }
+
+        viewModel.userResult.observe(viewLifecycleOwner) {
+            when (it) {
+                is NetworkStatus.Error -> {
+
+                }
+                is NetworkStatus.Loading -> {
+
+                }
+                is NetworkStatus.Success -> {
+                    Glide.with(requireActivity()).load("${DOMAIN_FILE}image/${it.data.profileUrl}")
+                        .placeholder(R.mipmap.ic_launcher)
+                        .into(binding.btnUserInfo)
                 }
             }
         }

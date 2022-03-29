@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide
 import com.nunar.nun_ar_android_v1.R
 import com.nunar.nun_ar_android_v1.databinding.FragmentModifyUserInfoBinding
 import com.nunar.nun_ar_android_v1.model.Server.DOMAIN
+import com.nunar.nun_ar_android_v1.model.Server.DOMAIN_FILE
 import com.nunar.nun_ar_android_v1.utils.NetworkStatus
 import com.nunar.nun_ar_android_v1.viewmodel.ModifyUserInfoViewModel
 import java.io.File
@@ -61,7 +62,7 @@ class ModifyUserInfoFragment : Fragment() {
 
         viewModel.profileUrl.observe(viewLifecycleOwner) {
             Glide.with(this.requireContext())
-                .load("${DOMAIN}image/${it}")
+                .load("${DOMAIN_FILE}image/${it}")
                 .into(binding.ivProfile)
         }
 

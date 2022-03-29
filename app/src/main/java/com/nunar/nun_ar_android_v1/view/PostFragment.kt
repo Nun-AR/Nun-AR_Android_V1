@@ -17,6 +17,7 @@ import com.nunar.nun_ar_android_v1.R
 import com.nunar.nun_ar_android_v1.adapter.PostAdapter
 import com.nunar.nun_ar_android_v1.databinding.FragmentPostBinding
 import com.nunar.nun_ar_android_v1.model.Server.DOMAIN
+import com.nunar.nun_ar_android_v1.model.Server.DOMAIN_FILE
 import com.nunar.nun_ar_android_v1.utils.NetworkStatus
 import com.nunar.nun_ar_android_v1.viewmodel.PostViewModel
 import java.io.File
@@ -66,7 +67,7 @@ class PostFragment : Fragment() {
                     binding.postDownloadBtn.setOnClickListener { _ ->
                         Thread {
                             try {
-                                val url = URL("${DOMAIN}model/${it.data.fileUrl}")
+                                val url = URL("${DOMAIN_FILE}model/${it.data.fileUrl}")
                                 val folder =
                                     File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
                                         "")
@@ -105,7 +106,7 @@ class PostFragment : Fragment() {
                         val sceneViewIntent = Intent(Intent.ACTION_VIEW)
                         val url = Uri.parse("https://arvr.google.com/scene-viewer/1.0").buildUpon()
                             .appendQueryParameter("file",
-                                "${DOMAIN}model/${fileUrl}")
+                                "${DOMAIN_FILE}model/${fileUrl}")
                             .appendQueryParameter("mode", "3d_preferred")
                             .build()
                         sceneViewIntent.data = url
@@ -114,11 +115,11 @@ class PostFragment : Fragment() {
                     }
 
                     Glide.with(this)
-                        .load("${DOMAIN}image/${it.data.thumbnail}")
+                        .load("${DOMAIN_FILE}image/${it.data.thumbnail}")
                         .into(binding.postImageView)
 
                     Glide.with(this)
-                        .load("${DOMAIN}image/${it.data.profileUrl}")
+                        .load("${DOMAIN_FILE}image/${it.data.profileUrl}")
                         .into(binding.postUserImage)
                 }
             }
