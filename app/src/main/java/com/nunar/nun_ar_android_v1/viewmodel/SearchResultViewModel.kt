@@ -10,13 +10,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class SearchResultViewModel: ViewModel() {
+class SearchResultViewModel : ViewModel() {
     private val disposable = CompositeDisposable()
 
     private val _searchResult = MutableLiveData<NetworkStatus<List<PostResponse>>>()
     val searchResult: LiveData<NetworkStatus<List<PostResponse>>> = _searchResult
 
-    fun getSearchList(searchWord: String){
+    fun getSearchList(searchWord: String) {
         _searchResult.value = NetworkStatus.Loading()
 
         disposable.add(
@@ -24,7 +24,13 @@ class SearchResultViewModel: ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(
                     {
                         if (it.code == 200) {
-                            _searchResult.value = NetworkStatus.Success(it.data)
+
+                            val result = it.data.filter {
+                                it.title.contains(searchWord) || it.tag.split("#")
+                                    .map { it.replace(" ", "") }.any { it.contains(searchWord) }
+                            }
+
+                            _searchResult.value = NetworkStatus.Success(result)
                         } else {
                             _searchResult.value =
                                 NetworkStatus.Error(throwable = Throwable(it.message))
