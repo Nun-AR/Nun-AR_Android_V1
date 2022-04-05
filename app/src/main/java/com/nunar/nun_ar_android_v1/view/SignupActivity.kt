@@ -95,7 +95,7 @@ class SignupActivity : AppCompatActivity() {
 
                 }
                 is NetworkStatus.Success -> {
-                    Toast.makeText(this@SignupActivity, "회원가입 성공!", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@SignupActivity.applicationContext, "회원가입 성공!", Toast.LENGTH_SHORT)
                     finish()
 
                 }
